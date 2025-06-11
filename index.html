@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 2025 굿어스데이터 상반기 워크숍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 25px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+        }
+
+        .header .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .date-location {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* 탭 네비게이션 */
+        .tab-navigation {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .tab-button {
+            background: #f8fafc;
+            border: none;
+            padding: 15px 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-color: #4c51bf;
+        }
+
+        .tab-button:not(.active):hover {
+            background: #e2e8f0;
+        }
+
+        /* 탭 컨텐츠 */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .section {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #5a67d8;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section h3 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            margin: 20px 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        /* 모바일 최적화 테이블 */
+        .schedule-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .schedule-table {
+            width: 100%;
+            min-width: 500px;
+            border-collapse: collapse;
+            background: #f8fafc;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            word-break: keep-all;
+        }
+
+        .schedule-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* 모바일 카드 레이아웃 */
+        .group-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .group-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .group-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .member {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .member.leader {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+
+        .member.facilitator {
+            background: rgba(255, 215, 0, 0.3);
+        }
+
+        .role-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* 방 배정 모바일 최적화 */
+        .room-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .room-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .room-card.female-room {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+        }
+
+        .room-card h4 {
+            color: #2d3748;
+            margin-bottom: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .room-member {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 6px 8px;
+            margin: 4px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        /* 게임 설명 카드 */
+        .game-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 12px 0;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-card h4 {
+            color: #2d3748;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .game-card p, .game-card ol {
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .game-card ol {
+            padding-left: 20px;
+        }
+
+        .game-card li {
+            margin-bottom: 5px;
+        }
+
+        /* 스크롤 힌트 */
+        .scroll-hint {
+            text-align: center;
+            color: #718096;
+            font-size: 0.8rem;
+            margin: 5px 0;
+            font-style: italic;
+        }
+
+        /* 푸터 스타일 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .tab-button {
+                padding: 12px 6px;
+                font-size: 0.75rem;
+            }
+            
+            .section {
+                padding: 15px 12px;
+            }
+            
+            .schedule-table {
+                font-size: 0.75rem;
+            }
+            
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px 6px;
+            }
+        }
+
+        /* 푸터 스타일 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>🎉 2025년 굿어스데이터<br>상반기 워크숍</h1>
+            <p class="subtitle">함께 만들어가는 특별한 시간</p>
+            <div class="date-location">
+                📅 6월 13일(금) ~ 14일(토)<br>
+                📍 켄싱턴 리조트 가평
+            </div>
+        </div>
+
+        <!-- 탭 네비게이션 -->
+        <div class="tab-navigation">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="showTab('schedule')">
+                    📅<br>행사일정
+                </button>
+                <button class="tab-button" onclick="showTab('teams')">
+                    👥<br>조배정
+                </button>
+                <button class="tab-button" onclick="showTab('rooms')">
+                    🏨<br>숙소배정
+                </button>
+                <button class="tab-button" onclick="showTab('games')">
+                    🎮<br>레크레이션
+                </button>
+            </div>
+        </div>
+
+        <!-- 행사일정 탭 -->
+        <div class="tab-content active" id="schedule">
+            <div class="section">
+                <h2>📅 행사일정</h2>
+                
+                <h3>6월 13일(금) 일정</h3>
+                <div class="scroll-hint">← 좌우로 스크롤하여 전체 일정을 확인하세요 →</div>
+                <div class="schedule-container">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>시간</th>
+                                <th>소요시간</th>
+                                <th>내용</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10:30</td>
+                                <td>-</td>
+                                <td>리조트 집결</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>11:00~12:30</td>
+                                <td>1:30</td>
+                                <td>점심식사 및 티타임</td>
+                                <td>예솔리퀸즈 컨벤션 가평점</td>
+                            </tr>
+                            <tr>
+                                <td>12:30~13:00</td>
+                                <td>0:30</td>
+                                <td>연회장 집결 & 정비</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>13:00~13:10</td>
+                                <td>0:10</td>
+                                <td>개회식 발표</td>
+                                <td>전상현 대표님</td>
+                            </tr>
+                            <tr>
+                                <td>13:10~13:30</td>
+                                <td>0:20</td>
+                                <td>사업부장 발표</td>
+                                <td>엄태운 수석</td>
+                            </tr>
+                            <tr>
+                                <td>13:30~13:50</td>
+                                <td>0:20</td>
+                                <td>사업부장 발표</td>
+                                <td>현문환 상무</td>
+                            </tr>
+                            <tr>
+                                <td>13:50~14:10</td>
+                                <td>0:20</td>
+                                <td>기술그룹장 발표</td>
+                                <td>추창호 상무</td>
+                            </tr>
+                            <tr>
+                                <td>14:10~14:30</td>
+                                <td>0:20</td>
+                                <td>혀니봇3</td>
+                                <td>윤병길 수석</td>
+                            </tr>
+                            <tr>
+                                <td>14:30~15:00</td>
+                                <td>0:30</td>
+                                <td>쉬는시간</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>15:00~16:00</td>
+                                <td>1:00</td>
+                                <td>간담회</td>
+                                <td>현문환, 추창호, 엄태운, 황정혜, 김성욱, 신범석, 신혜용, 김태기</td>
+                            </tr>
+                            <tr>
+                                <td>16:00~16:40</td>
+                                <td>0:40</td>
+                                <td>레크리에이션</td>
+                                <td>줄줄이 말해요 / 줄줄이 그려요</td>
+                            </tr>
+                            <tr>
+                                <td>16:40~17:00</td>
+                                <td>0:20</td>
+                                <td>시상식</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>17:00~17:30</td>
+                                <td>0:30</td>
+                                <td>체크인 및 저녁장소 이동</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>17:30~21:00</td>
+                                <td>3:30</td>
+                                <td>저녁식사 및 뒤풀이</td>
+                                <td>BBQ 파티</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>6월 14일(토) 일정</h3>
+                <div class="schedule-container">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>시간</th>
+                                <th>소요시간</th>
+                                <th>내용</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>8:00~9:00</td>
+                                <td>1:00</td>
+                                <td>조식</td>
+                                <td>메뉴: 모닝뷔페(조식식당)</td>
+                            </tr>
+                            <tr>
+                                <td>9:00~</td>
+                                <td>-</td>
+                                <td>해산~!</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 조배정 탭 -->
+        <div class="tab-content" id="teams">
+            <div class="section">
+                <h2>👥 조배정</h2>
+                <div class="group-grid">
+                    <!-- 1조 -->
+                    <div class="group-card">
+                        <h4>1조</h4>
+                        <div class="member-list">
+                            <div class="member leader">
+                                <span>전상현</span>
+                                <span>대표</span>
+                            </div>
+                            <div class="member leader">
+                                <span>김성욱</span>
+                                <span>수석 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member leader">
+                                <span>김태기</span>
+                                <span>차장 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member">
+                                <span>김용재</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>최수정</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>유진우</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>이정진</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>박경준</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>이보람</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>서태석</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>김동찬</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>이정은</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>송재완</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>김종우</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member facilitator">
+                                <span>홍성경</span>
+                                <span>사원 <span class="role-badge">진행요원</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2조 -->
+                    <div class="group-card">
+                        <h4>2조</h4>
+                        <div class="member-list">
+                            <div class="member leader">
+                                <span>현문환</span>
+                                <span>상무 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member leader">
+                                <span>신범석</span>
+                                <span>수석 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member">
+                                <span>조정열</span>
+                                <span>차장</span>
+                            </div>
+                            <div class="member">
+                                <span>최종현</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>박다혜</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>김남훈</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>안세진</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>김상철</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>최태린</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>유혜림</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>유동훈</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member facilitator">
+                                <span>민윤기</span>
+                                <span>사원 <span class="role-badge">진행요원</span></span>
+                            </div>
+                            <div class="member">
+                                <span>구경민</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>차진우</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>최재건</span>
+                                <span>사원</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3조 -->
+                    <div class="group-card">
+                        <h4>3조</h4>
+                        <div class="member-list">
+                            <div class="member leader">
+                                <span>추창호</span>
+                                <span>상무 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member leader">
+                                <span>황정혜</span>
+                                <span>수석 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member">
+                                <span>이정헌</span>
+                                <span>부장</span>
+                            </div>
+                            <div class="member">
+                                <span>최진우</span>
+                                <span>차장</span>
+                            </div>
+                            <div class="member">
+                                <span>홍성현</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>박영민</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>박진종</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member facilitator">
+                                <span>윤태경</span>
+                                <span>대리 <span class="role-badge">진행요원</span></span>
+                            </div>
+                            <div class="member">
+                                <span>김용현</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>양세이</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>최선희</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>금기현</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>이다현</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>강상우</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>이남화</span>
+                                <span>사원</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4조 -->
+                    <div class="group-card">
+                        <h4>4조</h4>
+                        <div class="member-list">
+                            <div class="member leader">
+                                <span>엄태운</span>
+                                <span>수석 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member leader">
+                                <span>신해용</span>
+                                <span>부장 <span class="role-badge">간담회조장</span></span>
+                            </div>
+                            <div class="member">
+                                <span>강재구</span>
+                                <span>부장</span>
+                            </div>
+                            <div class="member facilitator">
+                                <span>송재혁</span>
+                                <span>부장 <span class="role-badge">진행요원</span></span>
+                            </div>
+                            <div class="member">
+                                <span>최연주</span>
+                                <span>과장</span>
+                            </div>
+                            <div class="member">
+                                <span>조현규</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>장진영</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>조성연</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>권순재</span>
+                                <span>대리</span>
+                            </div>
+                            <div class="member">
+                                <span>박하민</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>권구호</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>김인걸</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>진재영</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>김기정</span>
+                                <span>사원</span>
+                            </div>
+                            <div class="member">
+                                <span>문규태</span>
+                                <span>사원</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 숙소배정 탭 -->
+        <div class="tab-content" id="rooms">
+            <div class="section">
+                <h2>🏨 숙소배정</h2>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">
+                    📍 켄싱턴 리조트 가평<br>
+                    디럭스 플러스 12실(4인 1실), 프리미어 플러스 4실(4인 1실), 로열스위트 1실
+                </p>
+                <div class="room-grid">
+                    <div class="room-card">
+                        <h4>Room 1 (로열스위트)</h4>
+                        <div class="room-member">
+                            <span>전상현</span>
+                            <span>대표</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 2</h4>
+                        <div class="room-member">
+                            <span>현문환</span>
+                            <span>상무</span>
+                        </div>
+                        <div class="room-member">
+                            <span>엄태운</span>
+                            <span>수석</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 3</h4>
+                        <div class="room-member">
+                            <span>윤병길</span>
+                            <span>수석</span>
+                        </div>
+                        <div class="room-member">
+                            <span>추창호</span>
+                            <span>상무</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 4</h4>
+                        <div class="room-member">
+                            <span>김성욱</span>
+                            <span>수석</span>
+                        </div>
+                        <div class="room-member">
+                            <span>신해용</span>
+                            <span>부장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>강재구</span>
+                            <span>부장</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 5</h4>
+                        <div class="room-member">
+                            <span>박진종</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>권규호</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>안세진</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>우동준</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 6</h4>
+                        <div class="room-member">
+                            <span>김태기</span>
+                            <span>차장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>유진우</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>윤태경</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>김종우</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 7</h4>
+                        <div class="room-member">
+                            <span>최진우</span>
+                            <span>차장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>홍성혁</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>최종현</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>박경준</span>
+                            <span>대리</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 8</h4>
+                        <div class="room-member">
+                            <span>신범석</span>
+                            <span>수석</span>
+                        </div>
+                        <div class="room-member">
+                            <span>이정헌</span>
+                            <span>부장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>조정열</span>
+                            <span>차장</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 9</h4>
+                        <div class="room-member">
+                            <span>박영민</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>권순재</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>금기현</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>이남화</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 10</h4>
+                        <div class="room-member">
+                            <span>김기정</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>문규태</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>최재건</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>송재환</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 11</h4>
+                        <div class="room-member">
+                            <span>김용재</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>이정진</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>최태린</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>차진우</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 12</h4>
+                        <div class="room-member">
+                            <span>김남훈</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>김상철</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>김동찬</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>구경민</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 13</h4>
+                        <div class="room-member">
+                            <span>김용현</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>강상우</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>민문기</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <h4>Room 14</h4>
+                        <div class="room-member">
+                            <span>조성연</span>
+                            <span>대리</span>
+                        </div>
+                        <div class="room-member">
+                            <span>서태석</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>김인결</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card female-room">
+                        <h4>Room 15 (여직원)</h4>
+                        <div class="room-member">
+                            <span>황경혜</span>
+                            <span>수석</span>
+                        </div>
+                        <div class="room-member">
+                            <span>박다혜</span>
+                            <span>과장</span>
+                        </div>
+                        <div class="room-member">
+                            <span>홍성경</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+
+                    <div class="room-card female-room">
+                        <h4>Room 16 (여직원)</h4>
+                        <div class="room-member">
+                            <span>최선희</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>이정은</span>
+                            <span>사원</span>
+                        </div>
+                        <div class="room-member">
+                            <span>진재영</span>
+                            <span>사원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 레크리에이션 탭 -->
+        <div class="tab-content" id="games">
+            <div class="section">
+                <h2>🎮 레크리에이션 규칙</h2>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">
+                    🏆 우승한 조: 조원 전체 각각 상품권 2만원
+                </p>
+
+                <div class="game-card">
+                    <h4>🗣️ 줄줄이 말해요</h4>
+                    <p><strong>요약:</strong> 제시받은 초성으로 단어 3초이내에 말하기</p>
+                    <ol>
+                        <li>초성은 '랜덤초성사이트'에서 제시받는다.</li>
+                        <li>제시받은 초성을 3초 이내에 단어를 외치고 다음사람으로 PASS</li>
+                        <li>만약 대답 하지 못하면 새로운 초성으로 변경되고 이어서 시작한다.</li>
+                    </ol>
+                    <p><strong>우승 방법:</strong> 맞춘 인원이 더 많은 팀이 우승<br>
+                    (총 게임 수: 각 조당 2팀이 1번씩 참여, 전체 4조: 8번)</p>
+                </div>
+
+                <div class="game-card">
+                    <h4>🎨 줄줄이 그려요</h4>
+                    <p><strong>요약:</strong> 제시받은 속담을 5초이내에 이어 그리기</p>
+                    <ol>
+                        <li>모두 같은 속담으로 제시받는다.</li>
+                        <li>제시받은 속담을 5초이내에 스케치북에 최대한 그리고 다음사람에게 넘긴다.</li>
+                        <li>그림을 완성하면 팀의 마지막 1명이 그림을 보고 속담을 스케치북에 답을 적는다.</li>
+                        <li>답을 적은 스케치북을 들고 앞으로 나와 조 순서대로 정답을 발표한다.</li>
+                    </ol>
+                    <p><strong>우승 방법:</strong> 정답을 맞춘 팀은 우승 (총 게임 수: 2번)<br>
+                    <strong>우승자가 겹칠 경우:</strong> 다음 속담으로 다시 대결한다. (단, 제한시간 없이 빠르게 그리고 먼저 정답 맞춰서 승부 겨루기)</p>
+                </div>
+
+                <!-- 추가 안내사항 -->
+                <div style="background: linear-gradient(135deg, #e8f5e8 0%, #d4f1d4 100%); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                    <h4 style="color: #2d5a2d; font-size: 1rem; margin-bottom: 8px;">🎯 게임 진행 안내</h4>
+                    <ul style="color: #4a754a; font-size: 0.9rem; line-height: 1.6; padding-left: 20px;">
+                        <li>각 조는 레크리에이션 시간에 적극적으로 참여해 주세요</li>
+                        <li>진행요원이 게임 진행을 도와드립니다</li>
+                        <li>공정한 게임을 위해 심판진의 판정을 따라주세요</li>
+                        <li>즐거운 분위기 조성을 위해 응원도 함께 해주세요!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="footer">
+            made by <a href="mailto:byunggil.yoon@goodusdata.com">byoon</a>, <a href="mailto:gyoungmin.gu@goodusdata.com">koo</a>
+        </div>
+    </div>
+
+    <script>
+        // 탭 전환 함수
+        function showTab(tabName) {
+            // 모든 탭 버튼 비활성화
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // 모든 탭 컨텐츠 숨기기
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 클릭된 탭 버튼 활성화
+            event.target.classList.add('active');
+            
+            // 해당 탭 컨텐츠 보이기
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 첫 번째 탭을 기본으로 활성화
+            showFirstTab();
+            
+            // 테이블 스크롤 힌트 효과
+            const tables = document.querySelectorAll('.schedule-container');
+            tables.forEach(container => {
+                let isScrolling = false;
+                
+                container.addEventListener('scroll', function() {
+                    if (!isScrolling) {
+                        container.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+                        isScrolling = true;
+                        
+                        setTimeout(() => {
+                            container.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+                            isScrolling = false;
+                        }, 1000);
+                    }
+                });
+            });
+        });
+
+        function showFirstTab() {
+            // 모든 탭 버튼과 컨텐츠 초기화
+            const buttons = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 첫 번째 탭 활성화
+            buttons[0].classList.add('active');
+            contents[0].classList.add('active');
+        }
+
+        // 터치 피드백
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.closest('.tab-button')) {
+                e.target.closest('.tab-button').style.transform = 'scale(0.95)';
+            }
+            if (e.target.closest('.group-card, .room-card, .game-card')) {
+                e.target.closest('.group-card, .room-card, .game-card').style.transform = 'scale(0.98)';
+            }
+        });
+
+        document.addEventListener('touchend', function(e) {
+            if (e.target.closest('.tab-button')) {
+                setTimeout(() => {
+                    e.target.closest('.tab-button').style.transform = 'scale(1)';
+                }, 100);
+            }
+            if (e.target.closest('.group-card, .room-card, .game-card')) {
+                setTimeout(() => {
+                    e.target.closest('.group-card, .room-card, .game-card').style.transform = 'scale(1)';
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
